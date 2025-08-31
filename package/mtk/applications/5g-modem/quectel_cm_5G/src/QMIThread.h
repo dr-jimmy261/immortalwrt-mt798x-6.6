@@ -1,3 +1,14 @@
+/*
+    Copyright 2025 Quectel Wireless Solutions Co.,Ltd
+
+    Quectel hereby grants customers of Quectel a license to use, modify,
+    distribute and publish the Software in binary form provided that
+    customers shall have no right to reverse engineer, reverse assemble,
+    decompile or reduce to source code form any portion of the Software. 
+    Under no circumstances may customers modify, demonstrate, use, deliver 
+    or disclose any portion of the Software in source code form.
+*/
+
 #ifndef __QMI_THREAD_H__
 #define __QMI_THREAD_H__
 
@@ -53,9 +64,9 @@
 #include <stddef.h>
 
 #include "qendian.h"
-#include "MPQMI.h"
-#include "MPQCTL.h"
-#include "MPQMUX.h"
+#include "QCQMI.h"
+#include "QCQCTL.h"
+#include "QCQMUX.h"
 #include "util.h"
 
 #define DEVICE_CLASS_UNKNOWN           0
@@ -191,15 +202,17 @@ typedef struct __PROFILE {
     //user input start
     const char *apn;
     const char *user;
-    const char *password;
+    const char *pd;
     int auth;
     int iptype;
     const char *pincode;
     char proxy[32];
-    int pdp;
+    int pdp;//pdp_context
+    int profile_index;//profile_index
     int enable_bridge;
     bool enable_ipv4;
     bool enable_ipv6;
+    bool no_dhcp;
     const char *logfile;
     const char *usblogfile;
     char expect_adapter[32];
@@ -221,6 +234,7 @@ typedef struct __PROFILE {
     UINT qos_id;
 #endif
     int wda_client;
+    uint32_t udhcpc_ip;
     IPV4_T ipv4;
     IPV6_T ipv6;
     UINT PCSCFIpv4Addr1;
@@ -241,13 +255,16 @@ typedef struct __PROFILE {
     char BaseBandVersion[64];
     char old_apn[64];
     char old_user[64];
-    char old_password[64];
+    char old_pd[64];
     int old_auth;
     int old_iptype;
 
     const struct qmi_device_ops *qmi_ops;
     const struct request_ops *request_ops;
     RMNET_INFO rmnet_info;
+    BOOL bring_up_by_apn_name;
+    BOOL bring_up_by_apn_type; 
+    int apn_type;
 } PROFILE_T;
 
 #ifdef QUECTEL_QMI_MERGE
@@ -352,8 +369,10 @@ extern int ql_bridge_mode_detect(PROFILE_T *profile);
 extern int ql_enable_qmi_wwan_rawip_mode(PROFILE_T *profile);
 extern int ql_qmap_mode_detect(PROFILE_T *profile);
 #ifdef CONFIG_QRTR
-extern int rtrmnet_ctl_create_vnd(char *devname, char *vndname, uint8_t muxid,
+extern int rtrmnet_ctl_new_vnd(char *devname, char *vndname, uint8_t muxid,
 		       uint32_t qmap_version, uint32_t ul_agg_cnt, uint32_t ul_agg_size);
+extern int rtrmnet_ctl_get_vnd(char *vndname, int *muxid,
+		       int *qmap_version);
 #endif
 
 #define qmidev_is_gobinet(_qmichannel) (strncmp(_qmichannel, "/dev/qcqmi", strlen("/dev/qcqmi")) == 0)
@@ -382,7 +401,35 @@ enum
 	SOFTWARE_QRTR,
 	HARDWARE_PCIE,
 	HARDWARE_USB,
+	HARDWARE_IPA,
 };
+
+#ifdef USE_IPC_MSG_STATUS_IND
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#define MSG_FILE "/etc/passwd"
+#define MSG_TYPE_IPC 1
+#define MSGBUFFSZ 16
+struct message
+{
+    long mtype;
+    char mtext[MSGBUFFSZ];
+};
+
+enum
+{
+    QCM_PARA_CONFIG_QUERY = 1,
+    QCM_NETWORK_IPV4_CONNECTED,
+    QCM_NETWORK_IPV6_CONNECTED,
+    QCM_NETWORK_IPV4_DISCONNECTED,
+    QCM_NETWORK_IPV6_DISCONNECTED,
+    QCM_PREPARE_START_DAIL,
+    QCM_PREPARE_DAIL_FIAL,
+    QCM_PREPARE_DAIL_SUCC,
+    QCM_PREPARE_RESTART_DAIL,
+    QCM_PROCESS_EXIT,
+};
+#endif
 
 enum
 {
@@ -407,13 +454,13 @@ typedef enum
 #ifdef CM_DEBUG
 #define dbg_time(fmt, args...) do { \
     fprintf(stdout, "[%15s-%04d: %s] " fmt "\n", __FILE__, __LINE__, get_time(), ##args); \
-	fflush(stdout);\
+    fflush(stdout);\
     if (logfilefp) fprintf(logfilefp, "[%s-%04d: %s] " fmt "\n", __FILE__, __LINE__, get_time(), ##args); \
 } while(0)
 #else
 #define dbg_time(fmt, args...) do { \
     fprintf(stdout, "[%s] " fmt "\n", get_time(), ##args); \
-	fflush(stdout);\
+    fflush(stdout);\
     if (logfilefp) fprintf(logfilefp, "[%s] " fmt "\n", get_time(), ##args); \
 } while(0)
 #endif

@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>内置PWM风扇控制台</title>
+    <title>Built-in PWM fan control console</title>
     <style>
         body {
             display: flex;
@@ -197,30 +197,30 @@
 </head>
 <body>
     <div class="container">
-        <h2>内置PWM风扇控制台</h2>
-        <h4>温馨提示：请注意风扇处不要密封,会影响进出风向</h4>
+        <h2>Built-in PWM fan control console</h2>
+        <h4>Tips: Please be careful not to seal the fan, as this will affect the direction of the wind.</h4>
         <div>
-            <button class="button" onclick="fanstop()">静音模式</button>
-            <button class="button" onclick="fanst1()">低速模式</button>
-            <button class="button" onclick="fanst2()">常规模式</button>
-            <button class="button" onclick="fanst3()">狂躁模式</button>
-            <button class="button" onclick="fanst4()">智能模式</button>
-            <button class="button" onclick="toggleSlider()">无极调速</button>
+            <button class="button" onclick="fanstop()">Silent Mode</button>
+            <button class="button" onclick="fanst1()">Low speed mode</button>
+            <button class="button" onclick="fanst2()">Normal mode</button>
+            <button class="button" onclick="fanst3()">Manic Mode</button>
+            <button class="button" onclick="fanst4()">Smart Mode</button>
+            <button class="button" onclick="toggleSlider()">Stepless speed regulation</button>
         </div>
         <div id="sliderContainer" class="slider-container">
             <input type="range" id="speedSlider" min="0" max="255" value="255" oninput="updateSpeed(this.value)">
         </div>
         <canvas id="fan" width="200" height="200"></canvas>
-        <div id="speedDisplay">当前转速：0</div>
-        <div id="temperatureDisplay">当前温度：0</div>
+        <div id="speedDisplay">Current speed：0</div>
+        <div id="temperatureDisplay">Current temperature：0</div>
         <div id="energyBar">
             <div id="energyFill"></div>
         </div>
 
         <div id="switchContainer" class="switch-container">
-            <span class="switch-label">使用模组温度</span>
+            <span class="switch-label">Using module temperature</span>
             <div class="switch" id="temperatureSwitch" onclick="toggleSwitch()"></div>
-            <span class="switch-label">使用CPU温度</span>
+            <span class="switch-label">Using CPU Temperature</span>
         </div>
     </div>
 
@@ -246,7 +246,7 @@
             const newValue = Math.round(percentage * (slider.max - slider.min));
             slider.value = newValue;
             
-            updateSpeed(newValue); // 更新速度
+            updateSpeed(newValue); // Update speed
         }
 
 
@@ -299,7 +299,7 @@
             const color = `rgb(${red}, 0, ${blue})`;
             
             document.getElementById('speedSlider').style.background = `linear-gradient(to right, ${color}, #ff0000)`;
-            document.getElementById('speedDisplay').innerText = `当前转速：${wjtsvall}0-RPM`;
+            document.getElementById('speedDisplay').innerText = `Current speed：${wjtsvall}0-RPM`;
         }
 
         window.onload = function() {
@@ -333,7 +333,7 @@
                 ctx.restore();
             }
 
-            document.getElementById('speedDisplay').innerText = `当前转速：${currentSpeed}0-RPM`;
+            document.getElementById('speedDisplay').innerText = `Current speed：${currentSpeed}0-RPM`;
             requestAnimationFrame(drawFan);
         }
 

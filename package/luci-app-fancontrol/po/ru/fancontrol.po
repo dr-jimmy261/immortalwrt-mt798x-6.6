@@ -1,41 +1,81 @@
+msgid ""
+msgstr ""
+"Language: ru\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# controller/fancontrol.lua
 msgid "Fan Control"
-msgstr "Управление вентилятором"
+msgstr "Вентилятор"
 
-msgid "Settings"
-msgstr "Настройки"
+# model/cbi/fancontrol.lua
+msgid "General fan control settings"
+msgstr "Общие настройки управления вентилятором"
 
-msgid "Enable"
-msgstr "Включить"
+msgid "Enabled"
+msgstr "Включено"
 
-msgid "Thermal File"
-msgstr "Файл температуры"
+msgid "Fan speed adjust reading path"
+msgstr "Путь управления скоростью вентилятора"
 
-msgid "Fan File"
-msgstr "Файл управления вентилятором"
+msgid "Thermal value reading path"
+msgstr "Путь файла температуры процессора"
 
-msgid "Fan Speed File"
-msgstr "Файл скорости вентилятора"
+msgid "Temperature division"
+msgstr "Делитель температуры"
 
-msgid "Initial Speed"
-msgstr "Начальная скорость"
+msgid "1000"
+msgstr "1000"
 
-msgid "Please enter the initial speed for fan startup."
-msgstr "Введите начальную скорость при запуске вентилятора."
+msgid "100"
+msgstr "100"
 
-msgid "Max Speed"
-msgstr "Максимальная скорость"
+msgid "10"
+msgstr "10"
 
-msgid "Please enter maximum fan speed."
-msgstr "Введите максимальную скорость вентилятора."
+msgid "1"
+msgstr "1"
 
-msgid "Start Temperature"
-msgstr "Температура запуска"
+msgid "Fan speed mode"
+msgstr "Режим скорости"
 
-msgid "Please enter the fan start temperature."
-msgstr "Введите температуру запуска вентилятора."
+msgid "Silent"
+msgstr "Тихий"
 
-msgid "Current speed:"
-msgstr "Текущая скорость:"
+msgid "Balance"
+msgstr "Баланс"
 
-msgid "Current temperature:"
-msgstr "Текущая температура:"
+msgid "Performance"
+msgstr "Производительный"
+
+msgid "Disabled"
+msgstr "Отключено"
+
+msgid "PWM fan type"
+msgstr "Тип вентилятора"
+
+msgid "1000 RPM"
+msgstr "1000 об/мин"
+
+msgid "1500 RPM"
+msgstr "1500 об/мин"
+
+msgid "2500+ RPM"
+msgstr "Более 2500 об/мин"
+
+# view/fancontrol_status.htm
+msgid "RUNNING"
+msgstr "РАБОТАЕТ"
+
+msgid "NOT RUNNING"
+msgstr "НЕ РАБОТАЕТ"
+
+msgid "Fan Speed"
+msgstr "Скорость вентилятора"
+
+msgid "Current Temperature"
+msgstr "Текущая температура"
+
+msgid "Collecting data..."
+msgstr "Сбор данных..."
+

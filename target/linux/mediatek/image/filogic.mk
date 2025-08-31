@@ -1215,8 +1215,8 @@ define Device/Airpi
   DEVICE_DTS := mt7981b-Airpi-emmc16G
   DEVICE_DTS_DIR := ../dts
   DEVICE_PACKAGES := kmod-usb-net-cdc-mbim  kmod-hwmon-pwmfan kmod-usb-net-qmi-wwan \
-		     kmod-usb-serial-option kmod-usb3 automount kmod-Airpi-gpio-fan \
- 		f2fsck mkf2fs uqmi luci-app-Airpifanctrl
+		     kmod-usb-serial-option kmod-usb3 \
+      		     uqmi luci-app-Airpifanctrl f2fsck losetup mkf2fs kmod-fs-f2fs kmod-mmc automount blkid blockdev fdisk
   KERNEL := kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
   KERNEL_INITRAMFS := kernel-bin | lzma | \
         fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd | pad-to 64k

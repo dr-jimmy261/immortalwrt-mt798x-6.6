@@ -1,18 +1,32 @@
-#
-# Copyright (C) 2008-2014 The LuCI Team <luci@lists.subsignal.org>
-#
-# This is free software, licensed under the Apache License, Version 2.0 .
-#
+# Forked in 2025 by Fil Dunsky (https://github.com/fildunsky) from coolsnowwolf (https://github.com/coolsnowwolf) repo.
+# This is free software, licensed under the GNU General Public License v2.
 
 include $(TOPDIR)/rules.mk
 
-LUCI_TITLE:=LuCI support for Fan Controller
-LUCI_DEPENDS:=+luci +fancontrol
-LUCI_PKGARCH:=all
-
 PKG_NAME:=luci-app-fancontrol
-PKG_VERSION:=1.0
+PKG_VERSION:=1-20
 PKG_RELEASE:=1
+PKG_MAINTAINER:=dunsky <filipp.dunsky@gmail.com>
 
-include $(TOPDIR)/feeds/luci/luci.mk
-# call BuildPackage - OpenWrt buildroot signature
+include $(INCLUDE_DIR)/package.mk
+
+define Package/$(PKG_NAME)
+  SECTION:=luci
+  CATEGORY:=LuCI
+  SUBMENU:=3. Applications
+  TITLE:=LuCI Fan Control
+  DEPENDS:=+luci-compat
+endef
+
+define Package/$(PKG_NAME)/description
+  LuCI interface for Huasifei WH3000 Pro general fan control utility
+endef
+
+define Build/Compile
+endef
+
+define Package/$(PKG_NAME)/install
+	$(CP) ./files/* $(1)/
+endef
+
+$(eval $(call BuildPackage,$(PKG_NAME)))

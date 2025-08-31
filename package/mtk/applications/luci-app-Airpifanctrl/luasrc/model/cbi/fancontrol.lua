@@ -34,7 +34,7 @@ function action_fanswj()
         end
     end
 	os.execute("echo 0 > /etc/fanvall")
-	os.execute("echo "..port.." > /sys/kernel/duty_cycle")
+	os.execute("echo "..port.." > /sys/devices/platform/pwm-fan/hwmon/hwmon2/pwm1")
 	os.execute("echo "..port.." > /usr/bin/fanspeed.conf")
 	rv["result"] = "fanswj"
 	luci.http.prepare_content("application/json")
@@ -91,8 +91,8 @@ function action_fansttp()
         local config = conf_file:read("*a")
         conf_file:close()
 
-        if config:match("模组温度") then
-			fansv="MT5700M-CN模组温度"
+        if config:match("Module temperature") then
+			fansv="MT5700M-CN Module temperature"
             local sendat_command = io.popen("sendat 1 'AT^CHIPTEMP?' | grep 'CHIPTEMP' | sed -n '1p' | cut -d, -f9 | sed '/^$/d'")
             local temp_output = sendat_command:read("*a")
             sendat_command:close()
@@ -103,7 +103,7 @@ function action_fansttp()
                 temperature = "null"
             end
         else
-            fansv="CPU温度"
+            fansv="CPU temperature"
             local file = io.open("/sys/class/thermal/thermal_zone0/temp", "r")
             if file then
                 temperature = file:read("*n")
@@ -114,7 +114,7 @@ function action_fansttp()
             end
         end
     else
-		fansv="CPU温度"
+		fansv="CPU temperature"
         local file = io.open("/sys/class/thermal/thermal_zone0/temp", "r")
         if file then
             temperature = file:read("*n")
@@ -156,7 +156,7 @@ function action_fanst2()
         end
     end
 	os.execute("echo 2 > /etc/fanvall")
-	os.execute("echo 192 > /sys/kernel/duty_cycle")
+	os.execute("echo 192 > /sys/devices/platform/pwm-fan/hwmon/hwmon2/pwm1")
 	os.execute("echo 192 > /usr/bin/fanspeed.conf")
 	rv["result"] = "fanst2"
 	luci.http.prepare_content("application/json")
@@ -183,7 +183,7 @@ function action_fanst1()
         end
     end
 	os.execute("echo 1 > /etc/fanvall")
-	os.execute("echo 128 > /sys/kernel/duty_cycle")
+	os.execute("echo 128 > /sys/devices/platform/pwm-fan/hwmon/hwmon2/pwm1")
 	os.execute("echo 128 > /usr/bin/fanspeed.conf")
 	rv["result"] = "fanst2"
 	luci.http.prepare_content("application/json")
@@ -210,7 +210,7 @@ function action_fanst3()
         end
     end
 	os.execute("echo 3 > /etc/fanvall")
-	os.execute("echo 255 > /sys/kernel/duty_cycle")
+	os.execute("echo 255 > /sys/devices/platform/pwm-fan/hwmon/hwmon2/pwm1")
 	os.execute("echo 255 > /usr/bin/fanspeed.conf")
 	rv["result"] = "fanst3"
 	luci.http.prepare_content("application/json")
@@ -265,7 +265,7 @@ function action_fanstop()
         end
     end
 	os.execute("echo 0 > /etc/fanvall")
-	os.execute("echo 64 > /sys/kernel/duty_cycle")
+	os.execute("echo 64 > /sys/devices/platform/pwm-fan/hwmon/hwmon2/pwm1")
 	os.execute("echo 64 > /usr/bin/fanspeed.conf")
 	rv["result"] = "fanstop"
 	luci.http.prepare_content("application/json")
@@ -282,7 +282,7 @@ function action_fansvm()
 	rv["at"] = fixed 
 	rv["port"] = port
 	os.execute("echo 9 > /etc/fanvall")
-	os.execute("echo 模组温度 > /etc/fanvallv.conf")
+	os.execute("echo Module temperature > /etc/fanvallv.conf")
 	rv["result"] = "fansvm"
 	luci.http.prepare_content("application/json")
 	luci.http.write_json(rv)
@@ -298,9 +298,8 @@ function action_fansvc()
 	rv["at"] = fixed 
 	rv["port"] = port
 	os.execute("echo 9 > /etc/fanvall")
-	os.execute("echo CPU温度 > /etc/fanvallv.conf")
+	os.execute("echo CPU temperature > /etc/fanvallv.conf")
 	rv["result"] = "fansvc"
 	luci.http.prepare_content("application/json")
 	luci.http.write_json(rv)
 end
-

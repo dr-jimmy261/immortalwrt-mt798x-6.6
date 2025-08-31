@@ -8,7 +8,7 @@ PKG_RELEASE:=1
 
 LUCI_TITLE:=LuCI for Airpifanctrl
 LUCI_PKGARCH:=all
-LUCI_DEPENDS:=+kmod-Airpi-gpio-fan
+LUCI_DEPENDS:=+kmod-hwmon-pwmfan +kmod-hwmon-gpiofan
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
