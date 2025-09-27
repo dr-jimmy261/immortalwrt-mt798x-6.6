@@ -221,9 +221,14 @@ zyxel,ex5601-t0-ubootmod)
 	ucidef_set_led_netdev "wifi-5g" "WIFI-5G" "green:wifi5g" "phy1-ap0" "link tx rx"
 	;;
 *wirelesstag*)
-	ucidef_set_led_default "power" "POWER" "wt:power:blue" "1"
-	ucidef_set_led_netdev "wlan2g" "WLAN2G" "wt:wifi:blue" "ra0" "link tx rx"
-	ucidef_set_led_netdev "wlan5g" "WLAN5G" "wt:wifi:blue" "rax0" "link tx rx"
+	ucidef_set_led_netdev "wlan2g" "WLAN2G" "wt:blue:wifi" "ra0" "link tx rx"
+	ucidef_set_led_netdev "wlan5g" "WLAN5G" "wt:blue:wifi" "rax0" "link tx rx"
+	ucidef_set_led_netdev "lan" "lan" "wt:blue:lan" "eth1" "link tx rx"
+	ucidef_set_led_netdev "wan" "wan" "wt:blue:wan" "wan" "link tx rx"
+	ucidef_set_led_netdev "lan1" "lan1" "wt:blue:lan1" "lan1" "link tx rx"
+	ucidef_set_led_netdev "lan2" "lan2" "wt:blue:lan2" "lan2" "link tx rx"
+	ucidef_set_led_netdev "lan3" "lan3" "wt:blue:lan3" "lan3" "link tx rx"
+	ucidef_set_led_netdev "lan4" "lan4" "wt:blue:lan4" "lan4" "link tx rx"
 	;;
 esac
 

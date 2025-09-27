@@ -6,8 +6,8 @@
 #include <dt-bindings/leds/common.h>
 
 / {
-	model = "Wireless-Tag ZX7981PG";
-	compatible = "wirelesstag,zx7981pg", "mediatek,mt7981";
+	model = "Wireless-Tag ZX7981PGE (PCIEver)";
+	compatible = "wirelesstag,zx7981pge", "mediatek,mt7981";
 
 	aliases {
 		ethernet0 = &gmac0;
@@ -159,6 +159,7 @@
 	};
 };
 
+
 &mdio_bus {
 	switch: switch@1f {
 		compatible = "mediatek,mt7531";
@@ -205,6 +206,7 @@
 		};
 	};
 };
+
 
 &spi0 {
 	pinctrl-names = "default";
@@ -301,13 +303,29 @@
 			groups = "spi0", "spi0_wp_hold";
 		};
 	};
+	
+	pcie_pins: pcie-pins {
+		mux {
+			function = "pcie";
+			groups = "pcie_clk", "pcie_wake", "pcie_pereset";
+		};
+	};	
 };
 
-&usb_phy {
+&pcie {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pcie_pins>;
+    use-delay = <30>;
 	status = "okay";
 };
 
 &xhci {
+	phys = <&u2port0 PHY_TYPE_USB2>;
+	mediatek,u3p-dis-msk = <0x01>;
+	status = "okay";
+};
+
+&usb_phy {
 	status = "okay";
 };
 

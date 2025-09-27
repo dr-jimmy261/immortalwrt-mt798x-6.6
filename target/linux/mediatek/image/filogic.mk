@@ -2776,6 +2776,24 @@ define Device/wirelesstag_zx7981pg
 endef
 TARGET_DEVICES += wirelesstag_zx7981pg
 
+define Device/wirelesstag_zx7981pge
+  DEVICE_VENDOR := Wireless-Tag
+  DEVICE_MODEL := ZX7981PGE
+  DEVICE_DTS := mt7981b-wirelesstag-zx7981pge
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware kmod-usb3 mt7981-wo-firmware kmod-pcie_mhi
+  DEVICE_DTS_LOADADDR := 0x44000000
+  UBINIZE_OPTS := -E 5
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  IMAGE_SIZE := 51200k
+  KERNEL_IN_UBI := 1
+  IMAGES += factory.bin
+  IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+endef
+TARGET_DEVICES += wirelesstag_zx7981pge
+
 define Device/wirelesstag_zx7981pd
   DEVICE_VENDOR := Wireless-Tag
   DEVICE_MODEL := ZX7981PD
