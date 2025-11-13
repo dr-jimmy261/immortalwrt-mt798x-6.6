@@ -122,6 +122,12 @@
 			gpio-export,output = <1>; // OUT_INIT_LOW
 			gpios = <&pio 15 0>;    // GPIO 15, ACTIVE_LOW
 		};
+		
+		fan {
+			gpio-export,name = "fan";
+			gpio-export,output = <1>; // OUT_INIT_LOW
+			gpios = <&pio 6 0>;    // GPIO 5, ACTIVE_LOW
+		};
 	};
 };
 
