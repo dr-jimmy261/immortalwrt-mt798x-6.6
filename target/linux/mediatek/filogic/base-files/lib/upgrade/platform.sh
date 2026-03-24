@@ -235,6 +235,9 @@ platform_check_image() {
 		}
 		return 0
 		;;
+	cmcc,rax3000m-emmc)
+		return 0
+		;;
 	nradio,c8-668gl)
 		# tar magic `ustar`
 		magic="$(dd if="$1" bs=1 skip=257 count=5 2>/dev/null)"
@@ -246,6 +249,7 @@ platform_check_image() {
 
 		return 0
 		;;	
+
 	*)
 		nand_do_platform_check "$board" "$1"
 		return $?
