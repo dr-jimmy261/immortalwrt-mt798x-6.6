@@ -1037,6 +1037,23 @@ define Device/edgecore_eap111
 endef
 TARGET_DEVICES += edgecore_eap111
 
+define Device/fzs_5gcpe-p3
+  DEVICE_VENDOR := FZS
+  DEVICE_MODEL := 5GCPE P3
+  DEVICE_DTS := mt7981b-fzs-5gcpe-p3
+  DEVICE_DTS_DIR := ../dts
+  UBINIZE_OPTS := -E 5
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  IMAGE_SIZE := 51200k
+  KERNEL_IN_UBI := 1
+  DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3
+  IMAGES += factory.bin
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+  IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
+endef
+TARGET_DEVICES += fzs_5gcpe-p3
+
 define Device/gatonetworks_gdsp
   DEVICE_VENDOR := GatoNetworks
   DEVICE_MODEL := gdsp
