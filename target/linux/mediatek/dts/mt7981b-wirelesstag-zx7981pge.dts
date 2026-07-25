@@ -126,7 +126,13 @@
 		fan {
 			gpio-export,name = "fan";
 			gpio-export,output = <1>; // OUT_INIT_LOW
-			gpios = <&pio 6 0>;    // GPIO 5, ACTIVE_LOW
+			gpios = <&pio 6 0>;    // GPIO 6, ACTIVE_LOW
+		};
+		
+		fan1 {
+			gpio-export,name = "fan";
+			gpio-export,output = <1>; // OUT_INIT_LOW
+			gpios = <&pio 5 0>;    // GPIO 5, ACTIVE_LOW
 		};
 	};
 };
@@ -238,7 +244,7 @@
 			#size-cells = <1>;
 
 			partition@0 {
-				label = "BL2";
+				label = "bl2";
 				reg = <0x00000 0x0100000>;
 			};
 
@@ -270,7 +276,7 @@
 			};
 
 			partition@380000 {
-				label = "FIP";
+				label = "fip";
 				reg = <0x380000 0x0200000>;
 			};
 
@@ -281,12 +287,7 @@
 
 			partition@620000 {
 				label = "ubi";
-				reg = <0x620000 0x3800000>;
-			};
-
-			partition@3E20000 {
-				label = "ubi2";
-				reg = <0x3E20000 0x3800000>;
+				reg = <0x620000 0x7000000>;
 			};
 
 			partition@7620000 {

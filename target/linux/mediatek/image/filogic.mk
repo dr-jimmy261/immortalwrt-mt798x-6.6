@@ -1045,7 +1045,7 @@ define Device/fzs_5gcpe-p3
   UBINIZE_OPTS := -E 5
   BLOCKSIZE := 128k
   PAGESIZE := 2048
-  IMAGE_SIZE := 51200k
+  IMAGE_SIZE := 114688k
   KERNEL_IN_UBI := 1
   DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3
   IMAGES += factory.bin
@@ -2785,7 +2785,7 @@ define Device/wirelesstag_zx7981pg
   UBINIZE_OPTS := -E 5
   BLOCKSIZE := 128k
   PAGESIZE := 2048
-  IMAGE_SIZE := 51200k
+  IMAGE_SIZE := 114688k
   KERNEL_IN_UBI := 1
   IMAGES += factory.bin
   IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
