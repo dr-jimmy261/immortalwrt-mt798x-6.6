@@ -656,7 +656,7 @@ define Device/cmcc_rax3000m-emmc-mtk
   DEVICE_VARIANT := (MTK layout)
   DEVICE_DTS := mt7981b-cmcc-rax3000m-emmc-mtk
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-usb3 f2fsck mkf2fs
+  DEVICE_PACKAGES := kmod-usb3 kmod-fs-f2fs kmod-mmc f2fsck mkf2fs losetup automount blkid blockdev fdisk
   SUPPORTED_DEVICES += cmcc,rax3000m-emmc
   KERNEL := kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
   KERNEL_INITRAMFS := kernel-bin | lzma | \
@@ -1226,9 +1226,9 @@ define Device/huasifei_wh3000-pro
 endef
 TARGET_DEVICES += huasifei_wh3000-pro
 
-define Device/Airpi
+define Device/Airpi_emmc-16g
   DEVICE_VENDOR := Airpi
-  DEVICE_MODEL := emmc
+  DEVICE_MODEL := emmc-16g
   DEVICE_DTS := mt7981b-Airpi-emmc16G
   DEVICE_DTS_DIR := ../dts
   DEVICE_PACKAGES := kmod-usb-net-cdc-mbim  kmod-hwmon-pwmfan kmod-usb-net-qmi-wwan \
@@ -1239,7 +1239,7 @@ define Device/Airpi
         fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd | pad-to 64k
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += Airpi
+TARGET_DEVICES += Airpi_emmc-16g
 
 define Device/airpi_ap3000m
   DEVICE_VENDOR := Airpi
