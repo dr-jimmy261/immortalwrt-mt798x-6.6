@@ -19,7 +19,3 @@ start_service() {
 	fi
 }
 
-service_triggers() {
-	# Trigger a service reload instantly if a user modifies /etc/config/modemmanager
-	procd_add_reload_trigger "modemmanager"
-}
