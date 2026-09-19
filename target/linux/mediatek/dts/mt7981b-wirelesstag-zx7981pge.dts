@@ -199,6 +199,11 @@
 			label = "lan2";
 		};
 
+		port@2 {
+			reg = <2>;
+			label = "lan3";
+		};
+
 		port@6 {
 			reg = <6>;
 			label = "cpu";
@@ -210,11 +215,6 @@
 				full-duplex;
 				pause;
 			};
-		};
-
-		port@2 {
-			reg = <2>;
-			label = "lan1";
 		};
 	};
 };
