@@ -1,0 +1,52 @@
+--- a/drivers/pci/controller/pcie-mediatek-gen3.c
++++ b/drivers/pci/controller/pcie-mediatek-gen3.c
+@@ -185,6 +185,7 @@
+ 	struct clk_bulk_data *clks;
+ 	int num_clks;
+ 	int max_link_width;
++	u32 use_delay;
+ 
+ 	struct gpio_desc *wifi_reset;
+ 	u32 wifi_reset_delay_ms;
+@@ -490,10 +491,26 @@
+ 	val &= ~(PCIE_PE_RSTB);
+ 	writel_relaxed(val, pcie->base + PCIE_RST_CTRL_REG);
+ 
+-	/* Check if the link is up or not */
+-	err = readl_poll_timeout(pcie->base + PCIE_LINK_STATUS_REG, val,
+-				 !!(val & PCIE_PORT_LINKUP), 20,
+-				 PCI_PM_D3COLD_WAIT * USEC_PER_MSEC);
++	if (pcie->use_delay != 0) {
++		int i;
++		for (i = 0; i < pcie->use_delay; i++) {
++			/* Check if the link is up or not */
++			err = readl_poll_timeout(pcie->base + PCIE_LINK_STATUS_REG, val,
++						 !!(val & PCIE_PORT_LINKUP), 20,
++						 PCI_PM_D3COLD_WAIT * USEC_PER_MSEC);
++			if (err) {
++				msleep(300);
++			} else {
++				break;
++			}
++		}
++	} else {
++		/* Check if the link is up or not */
++		err = readl_poll_timeout(pcie->base + PCIE_LINK_STATUS_REG, val,
++					 !!(val & PCIE_PORT_LINKUP), 20,
++					 PCI_PM_D3COLD_WAIT * USEC_PER_MSEC);
++	}
++
+ 	if (err) {
+ 		const char *ltssm_state;
+ 		int ltssm_index;
+@@ -1118,6 +1135,10 @@
+ 
+ 	}
+ 
++	of_property_read_u32(dev->of_node, "use-delay",
++				   &pcie->use_delay);
++	dev_info(dev, "use delay %d\n", pcie->use_delay);
++
+ 	return 0;
+ }
+ 
